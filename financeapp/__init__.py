@@ -32,4 +32,14 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    ## Login view
+    from . import auth
+    app.register_blueprint(auth.bp)
+
+
+    #Transactions view
+    from . import transactions
+    app.register_blueprint(transactions.bp)
+    app.add_url_rule('/', endpoint='index')
+
     return app
