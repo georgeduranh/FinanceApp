@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}New transaction{% endblock %}</h1>
+{% endblock %} {% block content %}
+<form method="post">
+  <label for="date">Date</label>
+  <input type="date" name="date" id="date" required />
+
+  <label for="description">description</label>
+  <input name="description" id="description" required />
+
+  <label for="is_paid">is paid ?</label>
+  <input type="checkbox" name="is_paid" id="is_paid" required />
+
+  <label for="category_id">Category</label>
+  <select id="category_id" name="category_id" required>
+    <option value="1">Mercado</option>
+    <option value="2">Arriendo</option>
+    <option value="3">Pago tarjeta</option>
+    <option value="4">Servicios</option>
+  </select>
+
+  <label for="payment_method_id">Payment Method</label>
+  <select id="payment_method_id" name="payment_method_id" required>
+    <option value="1">Cuenta de ahorros</option>
+    <option value="2">Tarjeta de credito</option>
+  </select>
+
+  <label for="type_id">Transaction type</label>
+  <select id="type_id" name="type_id" required>
+    <option value="1">Gasto</option>
+    <option value="2">Pago</option>
+    <option value="3">Inversion</option>
+    <option value="4">Prestamo</option>
+  </select>
+
+  <input type="submit" value="Save" />
+</form>
+
+{% endblock %}

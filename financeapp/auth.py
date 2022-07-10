@@ -9,6 +9,7 @@ from financeapp.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
@@ -29,17 +30,19 @@ def register():
             try:
                 db.execute(
                     "INSERT INTO users (name, last_name, email, login, password) VALUES (?, ?, ?, ?, ?)",
-                    (name, last_name, email, username, generate_password_hash(password)),
+                    (name, last_name, email, username,
+                     generate_password_hash(password)),
                 )
                 db.commit()
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
-                return redirect(url_for("auth.login"))   
+                return redirect(url_for("auth.login"))
 
         flash(error)
 
     return render_template('auth/register.html')
+
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():

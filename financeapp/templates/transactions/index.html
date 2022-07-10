@@ -2,23 +2,25 @@
 <h1>{% block title %}Transactions{% endblock %}</h1>
 {% if g.user %}
 <a class="action" href="{{ url_for('transactions.create') }}">New</a>
+
 {% endif %} {% endblock %} {% block content %} {% for transaction in
 transactions %}
+<p>{{transaction['t.user_id']}}</p>
 <article class="transactions">
   <header>
     <div>
-      <h1>{{ transactions['id'] }}</h1>
-
-      <!--  <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div> -->
+      <h1>{{ transaction['description'] }}</h1>
+      <div class="about">by {{ transaction['user_id'] }}</div>
     </div>
-    {% if g.user['id'] == transactions['user_id'] %}
+    {% if g.user['id'] == transaction['user_id'] %}
     <a
       class="action"
-      href="{{ url_for('transactions.update', id=transactions['id']) }}"
+      href="{{ url_for('transactions.update', id=transaction['id']) }}"
       >Edit</a
     >
     {% endif %}
   </header>
+  <p class="body">{{ transaction['description'] }}</p>
 </article>
 {% if not loop.last %}
 <hr />
