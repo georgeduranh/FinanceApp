@@ -2,7 +2,7 @@ import os
 
 
 #from app
-from app import create_app
+from financeapp import create_app
 
 appid = os.environ.get('ACCESS_KEY')
 
