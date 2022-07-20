@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}Categories{% endblock %}</h1>
+{% if g.user %} {% endif %} {% endblock %} {% block content %} {% for category
+in categories %}
+
+<article class="transactions">
+  <header>
+    <div>
+      <h1>{{ category['id_categories'] }}</h1>
+      <p>{{ category['category'] }}</p>
+    </div>
+  </header>
+</article>
+{% if not loop.last %}
+<hr />
+{% endif %} {% endfor %} {% endblock %}

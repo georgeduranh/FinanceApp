@@ -42,4 +42,9 @@ def create_app(test_config=None):
     app.register_blueprint(transactions.bp)
     app.add_url_rule('/', endpoint='index')
 
+    #Transactions view
+    from . import categories
+    app.register_blueprint(categories.bp)
+    app.add_url_rule('/categories', endpoint='index')
+
     return app
