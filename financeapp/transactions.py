@@ -15,7 +15,7 @@ bp = Blueprint('transactions', __name__)
 def index():
     db = get_db()
     transactions = db.execute(
-        'SELECT t.id, t.registered_time, t.user_id, t.description'
+        'SELECT t.id, t.registered_time, t.user_id, t.description, t.amount, t.date_tx'
         ' FROM transactions t JOIN users u ON t.user_id = u.id'
         ' ORDER BY registered_time DESC'
     ).fetchall()
@@ -33,6 +33,7 @@ def create():
         category_id = request.form['category_id']
         payment_method_id = request.form['payment_method_id']
         type_id = request.form['type_id']
+        amount = request.form['amount']
         
         
         error = None
@@ -65,8 +66,8 @@ def create():
         else:
             db = get_db()
             db.execute(
-                "INSERT INTO transactions (date, description, is_paid, category_id, payment_method_id, user_id, type_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                ( date, description, is_paid, category_id, payment_method_id, g.user['id'], type_id),
+                "INSERT INTO transactions (date_tx, description, is_paid, category_id, payment_method_id, user_id, type_id, amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                ( date, description, is_paid, category_id, payment_method_id, g.user['id'], type_id, amount),
             )
             db.commit()
             return redirect(url_for('transactions.index'))
@@ -76,7 +77,7 @@ def create():
 
 def get_tx(id, check_author=True):
     transaction = get_db().execute(
-        'SELECT t.id, description, user_id'
+        'SELECT t.id, description, user_id, amount, date_tx, category_id'
         ' FROM transactions t JOIN users u ON t.user_id = u.id'
         ' WHERE t.id = ?',
         (id,)
@@ -98,6 +99,7 @@ def update(id):
     if request.method == 'POST':
         description = request.form['description']
         date = request.form['date']
+        amount = request.form['amount']
         error = None
 
         if not description:
@@ -111,9 +113,9 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE transactions SET description = ?, date = ?'
+                'UPDATE transactions SET description = ?, date_tx = ?, amount=?'
                 ' WHERE id = ?',
-                ( description, date, id)
+                ( description, date, amount, id)
             )
             db.commit()
             return redirect(url_for('transactions.index'))

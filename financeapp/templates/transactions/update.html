@@ -6,7 +6,7 @@
   <input
     name="date"
     id="date"
-    value="{{ transaction['date'] }}"
+    value="{{ transaction['date_tx'] }}"
     type="date"
     required
   />
@@ -15,6 +15,13 @@
     name="description"
     id="description"
     value="{{ transaction['description'] }}"
+    required
+  />
+
+  <input
+    name="amount"
+    id="amount"
+    value="{{ transaction['amount'] }}"
     required
   />
   <input type="submit" value="Save" />

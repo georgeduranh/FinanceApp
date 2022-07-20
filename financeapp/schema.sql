@@ -38,10 +38,11 @@ CREATE TABLE transaction_types (
 CREATE TABLE transactions (
   id INTEGER  PRIMARY  KEY AUTOINCREMENT,
   registered_time TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  date TIMESTAMP NOT NULL,
+  date_tx datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   description TEXT NOT NULL,
   is_paid BOOLEAN  NOT NULL DEFAULT 'False',
   user_id INTEGER  NOT NULL,
+  amount float  NOT NULL,
   category_id INTEGER  NOT NULL,
   payment_method_id INTEGER  NOT NULL,
   type_id INTEGER  NOT NULL,

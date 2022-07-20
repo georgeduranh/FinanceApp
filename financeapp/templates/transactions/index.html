@@ -8,17 +8,21 @@ transactions %}
 <p>{{transaction['t.user_id']}}</p>
 <article class="transactions">
   <header>
-    <div>
-      <h1>{{ transaction['description'] }}</h1>
-      <div class="about">by {{ transaction['user_id'] }}</div>
-    </div>
     {% if g.user['id'] == transaction['user_id'] %}
+    <div>
+      <h1>{{ transaction['id'] }}</h1>
+      <p>{{ transaction['amount'] }}</p>
+      <p>{{ transaction['date_tx'] }}</p>
+    </div>
     <a
       class="action"
       href="{{ url_for('transactions.update', id=transaction['id']) }}"
       >Edit</a
     >
-    {% endif %}
+    {% else %}
+    <p>Please login into your accoun</p>
+
+    {% endif%}
   </header>
   <p class="body">{{ transaction['description'] }}</p>
 </article>
