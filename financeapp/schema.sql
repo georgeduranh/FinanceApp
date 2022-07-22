@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS users;
 --
 CREATE TABLE categories (
   id_categories INTEGER  PRIMARY  KEY  AUTOINCREMENT,
-  category TEXT DEFAULT NULL
+  category TEXT DEFAULT NULL,
+  user_id INTEGER  NOT NULL
 );
 
 

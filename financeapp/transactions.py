@@ -12,6 +12,7 @@ bp = Blueprint('transactions', __name__)
 
 ## registered_time, date, description, is_paid, category_id, payment_method_id
 @bp.route('/')
+@login_required
 def index():
     db = get_db()
     transactions = db.execute(
