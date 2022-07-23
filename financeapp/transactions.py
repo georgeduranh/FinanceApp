@@ -8,6 +8,7 @@ from werkzeug.exceptions import abort
 from financeapp.auth import login_required
 from financeapp.db import get_db
 
+
 bp = Blueprint('transactions', __name__)
 
 ## registered_time, date, description, is_paid, category_id, payment_method_id
@@ -24,9 +25,26 @@ def index():
     return render_template('transactions/index.html', transactions=transactions)
 
 
+
+def get_categories(id, check_author=True):
+    categories = get_db().execute(
+        'SELECT *'
+        ' FROM categories c JOIN users u ON c.user_id = u.id'
+    ).fetchall()
+
+    if categories is None:
+        abort(404, f"Categorty id {id} doesn't exist.")
+
+    return categories
+
+
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
+    categories = get_categories(id)
+
+
     if request.method == 'POST':
         date = request.form['date']
         description = request.form['description']
@@ -73,7 +91,7 @@ def create():
             db.commit()
             return redirect(url_for('transactions.index'))
 
-    return render_template('transactions/create.html')
+    return render_template('transactions/create.html', categories=categories)
 
 
 def get_tx(id, check_author=True):

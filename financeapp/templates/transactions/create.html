@@ -16,10 +16,11 @@
 
   <label for="category_id">Category</label>
   <select id="category_id" name="category_id" required>
-    <option value="1">Mercado</option>
-    <option value="2">Arriendo</option>
-    <option value="3">Pago tarjeta</option>
-    <option value="4">Servicios</option>
+    {% block cats %} {% for category in categories %}
+    <option value="{{category['id_categories']}}">
+      {{category['category']}}
+    </option>
+    {% endfor %} {%endblock%}
   </select>
 
   <label for="payment_method_id">Payment Method</label>
