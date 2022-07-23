@@ -1,13 +1,13 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}Edit "{{ category['id_categories'] }}"{% endblock %}</h1>
+<h1>{% block title %}Edit "{{ payment_method['id'] }}"{% endblock %}</h1>
 {% endblock %} {% block content %}
 <form method="post">
-  <label for="category">Category</label>
+  <label for="payment_method">payment_method</label>
   <input
-    type="category"
-    name="category"
-    id="category"
-    value="{{ category['category']}}"
+    type="payment_method"
+    name="payment_method"
+    id="payment_method"
+    value="{{ payment_method['payment_method']}}"
     required
   />
 
@@ -15,7 +15,7 @@
 </form>
 
 <form
-  action="{{ url_for('categories.delete', id=category['id_categories']) }}"
+  action="{{ url_for('payment_methods.delete', id=payment_method['id']) }}"
   method="post"
 >
   <input

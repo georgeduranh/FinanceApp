@@ -25,8 +25,11 @@
 
   <label for="payment_method_id">Payment Method</label>
   <select id="payment_method_id" name="payment_method_id" required>
-    <option value="1">Cuenta de ahorros</option>
-    <option value="2">Tarjeta de credito</option>
+    {% block payment_methods %} {% for payment_method in payment_methods %}
+    <option value="{{payment_methods['id']}}">
+      {{payment_method['payment_method']}}
+    </option>
+    {% endfor %} {%endblock%}
   </select>
 
   <label for="type_id">Transaction type</label>

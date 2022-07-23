@@ -1,9 +1,14 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}New category{% endblock %}</h1>
+<h1>{% block title %}New payment_method{% endblock %}</h1>
 {% endblock %} {% block content %}
 <form method="post">
-  <label for="category">Category</label>
-  <input type="category" name="category" id="category" required />
+  <label for="payment_method">payment_method</label>
+  <input
+    type="payment_method"
+    name="payment_method"
+    id="payment_method"
+    required
+  />
 
   <input type="submit" value="Save" />
 </form>

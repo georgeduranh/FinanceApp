@@ -37,12 +37,24 @@ def get_categories(check_author=True):
 
     return categories
 
+def get_payment_methods(check_author=True):
+    payment_methods = get_db().execute(
+        'SELECT *'
+        ' FROM payment_methods c JOIN users u ON c.user_id = u.id'
+    ).fetchall()
+
+    if payment_methods is None:
+        abort(404, f"Categorty id {id} doesn't exist.")
+
+    return payment_methods
+
 
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
     categories = get_categories()
+    payment_methods =  get_payment_methods()
 
 
     if request.method == 'POST':
@@ -91,7 +103,7 @@ def create():
             db.commit()
             return redirect(url_for('transactions.index'))
 
-    return render_template('transactions/create.html', categories=categories)
+    return render_template('transactions/create.html', categories=categories, payment_methods=payment_methods)
 
 
 def get_tx(id, check_author=True):
@@ -115,6 +127,7 @@ def get_tx(id, check_author=True):
 def update(id):
     transaction = get_tx(id)
     categories = get_categories()
+    payment_methods =  get_payment_methods()
 
     if request.method == 'POST':
         description = request.form['description']
@@ -140,7 +153,7 @@ def update(id):
             db.commit()
             return redirect(url_for('transactions.index'))
 
-    return render_template('transactions/update.html', transaction=transaction, categories=categories)
+    return render_template('transactions/update.html', transaction=transaction, categories=categories, payment_methods=payment_methods)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))

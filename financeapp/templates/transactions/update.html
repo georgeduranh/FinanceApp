@@ -27,6 +27,15 @@
     {% endfor %} {%endblock%}
   </select>
 
+  <label for="payment_method_id">Payment method</label>
+  <select id="payment_method_id" name="payment_method_id" required>
+    {% block payment_methods %} {% for payment_method in payment_methods %}
+    <option value="{{payment_method['id']}}">
+      {{payment_method['payment_method']}}
+    </option>
+    {% endfor %} {%endblock%}
+  </select>
+
   <input
     name="amount"
     id="amount"

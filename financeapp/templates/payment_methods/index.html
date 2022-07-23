@@ -1,14 +1,18 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}Categories{% endblock %}</h1>
-{% if g.user %} {% endif %} {% endblock %} {% block content %} {% for category
-in categories %}
+<h1>{% block title %}Payment methods{% endblock %}</h1>
+{% if g.user %}
+
+<a class="action" href="{{ url_for('payment_methods.create') }}">New</a>
+
+{% endif %} {% endblock %} {% block content %} {% for payment_method in
+payment_methods %}
 
 <article class="transactions">
   <header>
     <div>
-      <p>{{ category['category'] }}</p>
+      <p>{{ payment_method['payment_method'] }}</p>
       <form
-        action="{{ url_for('categories.delete', id=category['id_categories']) }}"
+        action="{{ url_for('payment_methods.delete', id=payment_method['id']) }}"
         method="post"
       >
         <input
@@ -21,7 +25,7 @@ in categories %}
 
       <a
         class="action"
-        href="{{ url_for('categories.update', id=category['id_categories']) }}"
+        href="{{ url_for('payment_methods.update', id=payment_method['id']) }}"
         >Edit</a
       >
     </div>
