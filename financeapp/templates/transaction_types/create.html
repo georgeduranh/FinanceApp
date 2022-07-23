@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}New transaction_type{% endblock %}</h1>
+{% endblock %} {% block content %}
+<form method="post">
+  <label for="transaction_type">transaction_type</label>
+  <input type="transaction_type" name="transaction_type" id="transaction_type" required />
+
+  <input type="submit" value="Save" />
+</form>
+
+{% endblock %}

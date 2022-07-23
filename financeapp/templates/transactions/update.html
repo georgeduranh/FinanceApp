@@ -36,6 +36,15 @@
     {% endfor %} {%endblock%}
   </select>
 
+  <label for="type_id">Transaction type</label>
+  <select id="type_id" name="type_id" required>
+    {% block tt %} {% for transaction_type in transaction_types %}
+    <option value="{{transaction_type['id']}}">
+      {{transaction_type['transaction_type']}}
+    </option>
+    {% endfor %} {%endblock%}
+  </select>
+
   <input
     name="amount"
     id="amount"

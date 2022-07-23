@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}Edit "{{ transaction_type['id'] }}"{% endblock %}</h1>
+{% endblock %} {% block content %}
+<form method="post">
+  <label for="transaction_type">transaction_type</label>
+  <input
+    type="transaction_type"
+    name="transaction_type"
+    id="transaction_type"
+    value="{{ transaction_type['transaction_type']}}"
+    required
+  />
+
+  <input type="submit" value="Save" />
+</form>
+
+<form
+  action="{{ url_for('transaction_types.delete', id=transaction_type['id']) }}"
+  method="post"
+>
+  <input
+    class="danger"
+    type="submit"
+    value="Delete"
+    onclick="return confirm('Are you sure?');"
+  />
+</form>
+
+{% endblock %}

@@ -52,4 +52,9 @@ def create_app(test_config=None):
     app.register_blueprint(payment_methods.bp)
     app.add_url_rule('/payment_methods', endpoint='index')
 
+     #Transactions view
+    from . import transaction_types
+    app.register_blueprint(transaction_types.bp)
+    app.add_url_rule('/transaction_types', endpoint='index')
+
     return app

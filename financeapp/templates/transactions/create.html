@@ -25,8 +25,8 @@
 
   <label for="payment_method_id">Payment Method</label>
   <select id="payment_method_id" name="payment_method_id" required>
-    {% block payment_methods %} {% for payment_method in payment_methods %}
-    <option value="{{payment_methods['id']}}">
+    {% block pm %} {% for payment_method in payment_methods %}
+    <option value="{{payment_method['id']}}">
       {{payment_method['payment_method']}}
     </option>
     {% endfor %} {%endblock%}
@@ -34,10 +34,11 @@
 
   <label for="type_id">Transaction type</label>
   <select id="type_id" name="type_id" required>
-    <option value="1">Gasto</option>
-    <option value="2">Pago</option>
-    <option value="3">Inversion</option>
-    <option value="4">Prestamo</option>
+    {% block tt %} {% for transaction_type in transaction_types %}
+    <option value="{{transaction_type['id']}}">
+      {{transaction_type['transaction_type']}}
+    </option>
+    {% endfor %} {%endblock%}
   </select>
 
   <input type="submit" value="Save" />

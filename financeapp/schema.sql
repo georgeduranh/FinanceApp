@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE categories (
   id_categories INTEGER  PRIMARY  KEY  AUTOINCREMENT,
   category TEXT DEFAULT NULL,
-  user_id INTEGER  NOT NULL
+  user_id INTEGER  NOT NULL,
   FOREIGN KEY (user_id)
   REFERENCES users (id)  
   ON UPDATE CASCADE
@@ -31,9 +31,9 @@ CREATE TABLE payment_methods (
 -- Table structure for table transaction_types
 --
 CREATE TABLE transaction_types (
-  idtransaction_types INTEGER  PRIMARY  KEY AUTOINCREMENT,
-  type TEXT DEFAULT NULL
-  user_id INTEGER  NOT NULL
+  id INTEGER  PRIMARY  KEY AUTOINCREMENT,
+  transaction_type TEXT DEFAULT NULL,
+  user_id INTEGER  NOT NULL,
   FOREIGN KEY (user_id)
   REFERENCES users (id)  
   ON UPDATE CASCADE 
