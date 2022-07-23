@@ -9,6 +9,17 @@
   <ul>
     <li><a href="{{ url_for('transactions.index') }}">Transactions</a></li>
     <li><a href="{{ url_for('categories.index_cat') }}">Categories</a></li>
+    <li>
+      <a href="{{ url_for('payment_methods.index_payment_method') }}"
+        >Payment Methods</a
+      >
+    </li>
+    <li>
+      <a href="{{ url_for('transaction_types.index_transaction_type') }}"
+        >Transactions Types</a
+      >
+    </li>
+
     {% if g.user %}
     <li><span>{{ g.user['username'] }}</span></li>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a> {% else %}</li>
