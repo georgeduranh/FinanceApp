@@ -12,7 +12,11 @@
   <input name="amount" id="amount" required />
 
   <label for="is_paid">is paid ?</label>
-  <input type="checkbox" name="is_paid" id="is_paid" required />
+
+  <select id="is_paid" name="is_paid" required>
+    <option value="true">Si</option>
+    <option value="false">No</option>
+  </select>
 
   <label for="category_id">Category</label>
   <select id="category_id" name="category_id" required>

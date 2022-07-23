@@ -3,17 +3,29 @@
 {% if g.user %}
 <a class="action" href="{{ url_for('transactions.create') }}">New</a>
 
-{% endif %} {% endblock %} {% block content %} {% for transaction in
-transactions %}
+{% endif %} {% endblock %} {% block content %}
+<article class="transactions">
+  <header>
+    <div>
+      <p>Id</p>
+      <p>Transaction date</p>
+      <p>Description</p>
+      <p>Value</p>
+      <p>delete?</p>
+      <p>Edit?</p>
+    </div>
+  </header>
+</article>
+{% for transaction in transactions %}
 <p>{{transaction['t.user_id']}}</p>
 <article class="transactions">
   <header>
     {% if g.user['id'] == transaction['user_id'] %}
     <div>
       <h1>{{ transaction['id'] }}</h1>
-      <p>{{ transaction['amount'] }}</p>
       <p>{{ transaction['date_tx'] }}</p>
       <p class="body">{{ transaction['description'] }}</p>
+      <p>{{ transaction['amount'] }}</p>
 
       <form
         action="{{ url_for('transactions.delete', id=transaction['id']) }}"
