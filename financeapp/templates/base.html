@@ -7,6 +7,8 @@
 <nav>
   <h1>FinanceApp</h1>
   <ul>
+    <li><a href="{{ url_for('transactions.index') }}">Transactions</a></li>
+    <li><a href="{{ url_for('categories.index_cat') }}">Categories</a></li>
     {% if g.user %}
     <li><span>{{ g.user['username'] }}</span></li>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a> {% else %}</li>

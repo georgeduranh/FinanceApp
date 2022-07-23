@@ -6,8 +6,24 @@ in categories %}
 <article class="transactions">
   <header>
     <div>
-      <h1>{{ category['id_categories'] }}</h1>
       <p>{{ category['category'] }}</p>
+      <form
+        action="{{ url_for('categories.delete', id=category['id_categories']) }}"
+        method="post"
+      >
+        <input
+          class="danger"
+          type="submit"
+          value="Delete"
+          onclick="return confirm('Are you sure?');"
+        />
+      </form>
+
+      <a
+        class="action"
+        href="{{ url_for('categories.update', id=category['id_categories']) }}"
+        >Edit</a
+      >
     </div>
   </header>
 </article>
