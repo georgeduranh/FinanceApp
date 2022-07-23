@@ -18,6 +18,15 @@
     required
   />
 
+  <label for="category_id">Category</label>
+  <select id="category_id" name="category_id" required>
+    {% block cats %} {% for category in categories %}
+    <option value="{{category['id_categories']}}">
+      {{category['category']}}
+    </option>
+    {% endfor %} {%endblock%}
+  </select>
+
   <input
     name="amount"
     id="amount"

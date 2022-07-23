@@ -26,7 +26,7 @@ def index():
 
 
 
-def get_categories(id, check_author=True):
+def get_categories(check_author=True):
     categories = get_db().execute(
         'SELECT *'
         ' FROM categories c JOIN users u ON c.user_id = u.id'
@@ -42,7 +42,7 @@ def get_categories(id, check_author=True):
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
-    categories = get_categories(id)
+    categories = get_categories()
 
 
     if request.method == 'POST':
@@ -114,6 +114,7 @@ def get_tx(id, check_author=True):
 @login_required
 def update(id):
     transaction = get_tx(id)
+    categories = get_categories()
 
     if request.method == 'POST':
         description = request.form['description']
@@ -139,7 +140,7 @@ def update(id):
             db.commit()
             return redirect(url_for('transactions.index'))
 
-    return render_template('transactions/update.html', transaction=transaction)
+    return render_template('transactions/update.html', transaction=transaction, categories=categories)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
