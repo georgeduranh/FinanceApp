@@ -76,14 +76,28 @@ html {
     border: 1px solid #377ba8;
   }
   
+  .transactions{
+    margin: 0px;
+  }
+
   .transactions > header {
     display: flex;
     align-items: flex-end;
     font-size: 0.85em;
+   
+
   }
   
-  .ptransactionsost > header > div:first-of-type {
+  .transactions > header > div:first-of-type {
     flex: auto;
+    margin: 0px;
+  }
+
+  .transactions > header > div{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 10px;
+    margin: 0px;
   }
   
   .transactions > header h1 {
@@ -105,7 +119,7 @@ html {
   }
   
   .content form {
-    margin: 1em 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
   }

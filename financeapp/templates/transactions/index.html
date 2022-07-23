@@ -13,18 +13,32 @@ transactions %}
       <h1>{{ transaction['id'] }}</h1>
       <p>{{ transaction['amount'] }}</p>
       <p>{{ transaction['date_tx'] }}</p>
+      <p class="body">{{ transaction['description'] }}</p>
+
+      <form
+        action="{{ url_for('transactions.delete', id=transaction['id']) }}"
+        method="post"
+      >
+        <input
+          class="danger"
+          type="submit"
+          value="Delete"
+          onclick="return confirm('Are you sure?');"
+        />
+      </form>
+
+      <a
+        class="action"
+        href="{{ url_for('transactions.update', id=transaction['id']) }}"
+        >Edit</a
+      >
     </div>
-    <a
-      class="action"
-      href="{{ url_for('transactions.update', id=transaction['id']) }}"
-      >Edit</a
-    >
+
     {% else %}
     <p>Please login into your accoun</p>
 
     {% endif%}
   </header>
-  <p class="body">{{ transaction['description'] }}</p>
 </article>
 {% if not loop.last %}
 <hr />
