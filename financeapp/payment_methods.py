@@ -17,7 +17,7 @@ def index_payment_method():
     db = get_db()
     payment_methods = db.execute(
         'SELECT *'
-        ' FROM payment_methods c JOIN users u ON c.user_id = u.id'
+        ' FROM payment_methods c JOIN users u ON c.user_id = u.id where c.user_id = ?',  (g.user['id'],)
     ).fetchall()
     
     return render_template('payment_methods/index.html', payment_methods=payment_methods)

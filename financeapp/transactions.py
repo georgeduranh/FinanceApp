@@ -18,8 +18,8 @@ def index():
     db = get_db()
     transactions = db.execute(
         'SELECT t.id, t.registered_time, t.user_id, t.description, t.amount, t.date_tx'
-        ' FROM transactions t JOIN users u ON t.user_id = u.id'
-        ' ORDER BY registered_time DESC'
+        ' FROM transactions t JOIN users u ON t.user_id = u.id Where t.user_id = ?'
+        ' ORDER BY registered_time DESC', (g.user['id'],)
     ).fetchall()
     
     return render_template('transactions/index.html', transactions=transactions)
@@ -29,7 +29,7 @@ def index():
 def get_categories(check_author=True):
     categories = get_db().execute(
         'SELECT *'
-        ' FROM categories c JOIN users u ON c.user_id = u.id'
+        ' FROM categories c JOIN users u ON c.user_id = u.id where c.user_id = ?',  (g.user['id'],)
     ).fetchall()
 
     if categories is None:
@@ -40,7 +40,7 @@ def get_categories(check_author=True):
 def get_payment_methods(check_author=True):
     payment_methods = get_db().execute(
         'SELECT *'
-        ' FROM payment_methods c JOIN users u ON c.user_id = u.id'
+        ' FROM payment_methods c JOIN users u ON c.user_id = u.id where c.user_id = ?',  (g.user['id'],)
     ).fetchall()
 
     if payment_methods is None:
@@ -52,7 +52,7 @@ def get_payment_methods(check_author=True):
 def get_transaction_types(check_author=True):
     transaction_types = get_db().execute(
         'SELECT *'
-        ' FROM transaction_types c JOIN users u ON c.user_id = u.id'
+        ' FROM transaction_types c JOIN users u ON c.user_id = u.id where c.user_id = ?',  (g.user['id'],)
     ).fetchall()
 
     if transaction_types is None:

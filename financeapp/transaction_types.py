@@ -17,7 +17,7 @@ def index_transaction_type():
     db = get_db()
     transaction_types = db.execute(
         'SELECT *'
-        ' FROM transaction_types c JOIN users u ON c.user_id = u.id'
+        ' FROM transaction_types c JOIN users u ON c.user_id = u.id where c.user_id = ?',  (g.user['id'],)
     ).fetchall()
     
     return render_template('transaction_types/index.html', transaction_types=transaction_types)

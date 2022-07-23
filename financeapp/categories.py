@@ -17,7 +17,7 @@ def index_cat():
     db = get_db()
     categories = db.execute(
         'SELECT *'
-        ' FROM categories c JOIN users u ON c.user_id = u.id'
+        ' FROM categories c JOIN users u ON c.user_id = u.id where c.user_id = ?',  (g.user['id'],)
     ).fetchall()
     
     return render_template('categories/index.html', categories=categories)

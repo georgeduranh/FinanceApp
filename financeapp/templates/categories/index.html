@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block header %}
 <h1>{% block title %}Categories{% endblock %}</h1>
+
 {% if g.user %}
 <a class="action" href="{{ url_for('categories.create') }}">New</a>
 
@@ -7,6 +8,7 @@
 
 <article class="transactions">
   <header>
+    {% if g.user['id'] == category['user_id']%}
     <div>
       <p>{{ category['category'] }}</p>
       <form
@@ -27,6 +29,7 @@
         >Edit</a
       >
     </div>
+    {% endif %}
   </header>
 </article>
 {% if not loop.last %}

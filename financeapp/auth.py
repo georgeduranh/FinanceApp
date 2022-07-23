@@ -21,6 +21,8 @@ def register():
         db = get_db()
         error = None
 
+        default_categories = ["Mercado", "Servicios", "Arriendo"]
+
         if not username:
             error = 'Username is required.'
         elif not password:
@@ -34,6 +36,22 @@ def register():
                      generate_password_hash(password)),
                 )
                 db.commit()
+                
+
+                user = db.execute(
+                    'SELECT id FROM users WHERE login = ?', (username,)
+                ).fetchone()
+                
+                user = user['id']
+
+                for category in default_categories:
+                    db.execute(
+                        "INSERT INTO categories (category, user_id) VALUES (?, ?)",
+                        (category, user),
+                    )
+                    db.commit()
+
+
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
