@@ -21,7 +21,9 @@ def register():
         db = get_db()
         error = None
 
-        default_categories = ["Mercado", "Servicios", "Arriendo"]
+        default_categories = ["Mercado", "Domicilio", "Transporte", "Comida fuera", "Ropa" , "Viajes", "Compras Casa", "Entretenimiento", "Donacion", "Gasto laboral",
+                                "Impuestos", "Arriendo", "Servicios", "Pago tarjeta", "Salud personal", "Medicina", "Educacion", "Detalles", "Celular", "Gastos financieros", 
+                                "Suscripciones", "Seguridad social","Inversion", "Prestamo", "AFC", "Pension", "Fondo Emergencia", "Ahorros viajes", "Ahorros navidad", "Ahorros cumple"]
 
         if not username:
             error = 'Username is required.'
