@@ -11,6 +11,10 @@
       <p>Transaction date</p>
       <p>Description</p>
       <p>Value</p>
+      <p>Is paid?</p>
+      <p>Category</p>
+      <p>Type</p>
+      <p>Payment method</p>
       <p>delete?</p>
       <p>Edit?</p>
     </div>
@@ -26,6 +30,25 @@
       <p>{{ transaction['date_tx'] }}</p>
       <p class="body">{{ transaction['description'] }}</p>
       <p>{{ transaction['amount'] }}</p>
+      <p>{{ transaction['is_paid'] }}</p>
+
+      {% for category in categories %} {% if category['id_categories'] ==
+      transaction['category_id'] %}
+      <p>{{ category['category']}}</p>
+      {% endif %} {% endfor %}
+
+      <!--transaction_type -->
+      {% for type in transaction_types %} {% if type['id'] ==
+      transaction['type_id'] %}
+      <p>{{ type['transaction_type']}}</p>
+      {% endif %} {% endfor %}
+
+      <!--Payment method-->
+      {% for payment_method in payment_methods %} {% if payment_method['id'] ==
+      transaction['type_id'] %}
+
+      <p>{{ payment_method['payment_method']}}</p>
+      {% endif %} {% endfor %}
 
       <form
         action="{{ url_for('transactions.delete', id=transaction['id']) }}"

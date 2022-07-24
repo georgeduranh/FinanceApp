@@ -1,4 +1,5 @@
 from datetime import datetime
+from datetime import date
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
@@ -16,13 +17,18 @@ bp = Blueprint('transactions', __name__)
 @login_required
 def index():
     db = get_db()
+    categories = get_categories()
+    payment_methods =  get_payment_methods()
+    transaction_types =  get_transaction_types()
+
     transactions = db.execute(
-        'SELECT t.id, t.registered_time, t.user_id, t.description, t.amount, t.date_tx'
+        'SELECT t.id, t.registered_time, t.user_id, t.description, t.amount, t.date_tx, t.is_paid, category_id, payment_method_id, type_id'
         ' FROM transactions t JOIN users u ON t.user_id = u.id Where t.user_id = ?'
+        
         ' ORDER BY registered_time DESC', (g.user['id'],)
     ).fetchall()
     
-    return render_template('transactions/index.html', transactions=transactions)
+    return render_template('transactions/index.html', transactions=transactions, categories=categories, payment_methods=payment_methods, transaction_types=transaction_types)
 
 
 
@@ -68,10 +74,16 @@ def create():
     categories = get_categories()
     payment_methods =  get_payment_methods()
     transaction_types =  get_transaction_types()
+    
+    # mm/dd/y
+    today = date.today()
+    default_date = today.strftime("%m/%d/%Y")
+    #print(default_date)
+    
 
 
     if request.method == 'POST':
-        date = request.form['date']
+        date_tx = request.form['date_tx']
         description = request.form['description']
         is_paid = request.form['is_paid']
         category_id = request.form['category_id']
@@ -82,7 +94,7 @@ def create():
         
         error = None
 
-        if not date:
+        if not date_tx:
             error = 'date is required.'
 
         if not description:
@@ -111,12 +123,12 @@ def create():
             db = get_db()
             db.execute(
                 "INSERT INTO transactions (date_tx, description, is_paid, category_id, payment_method_id, user_id, type_id, amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                ( date, description, is_paid, category_id, payment_method_id, g.user['id'], type_id, amount),
+                ( date_tx, description, is_paid, category_id, payment_method_id, g.user['id'], type_id, amount),
             )
             db.commit()
             return redirect(url_for('transactions.index'))
 
-    return render_template('transactions/create.html', categories=categories, payment_methods=payment_methods, transaction_types=transaction_types)
+    return render_template('transactions/create.html', categories=categories, payment_methods=payment_methods, transaction_types=transaction_types, default_date=default_date)
 
 
 def get_tx(id, check_author=True):

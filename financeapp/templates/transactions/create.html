@@ -2,8 +2,14 @@
 <h1>{% block title %}New transaction{% endblock %}</h1>
 {% endblock %} {% block content %}
 <form method="post">
-  <label for="date">Date</label>
-  <input type="date" name="date" id="date" required />
+  <label for="date_tx">Date</label>
+  <input
+    type="date"
+    name="date_tx"
+    id="date_tx"
+    defaultValue="2022/07/27"
+    required
+  />
 
   <label for="description">description</label>
   <input name="description" id="description" required />

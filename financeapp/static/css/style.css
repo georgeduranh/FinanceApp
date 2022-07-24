@@ -95,7 +95,7 @@ html {
 
   .transactions > header > div{
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: 50px repeat(1, 1fr) 150px repeat(7, 1fr);
     grid-gap: 10px;
     margin: 0px;
   }
@@ -144,5 +144,6 @@ html {
   
   input[type=submit] {
     align-self: start;
-    min-width: 10em;
+    min-width: 4em;
+    margin-top: 0.5em;
   }
