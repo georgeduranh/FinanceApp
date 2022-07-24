@@ -121,7 +121,7 @@ def create():
 
 def get_tx(id, check_author=True):
     transaction = get_db().execute(
-        'SELECT t.id, description, user_id, amount, date_tx, category_id'
+        'SELECT t.id, description, user_id, amount, date_tx, category_id, payment_method_id, is_paid, type_id '
         ' FROM transactions t JOIN users u ON t.user_id = u.id'
         ' WHERE t.id = ?',
         (id,)
@@ -147,6 +147,11 @@ def update(id):
         description = request.form['description']
         date = request.form['date']
         amount = request.form['amount']
+        payment_method_id  = request.form['payment_method_id']
+        category_id = request.form['category_id']
+        type_id = request.form['type_id']
+        is_paid = request.form['is_paid']
+
         error = None
 
         if not description:
@@ -160,9 +165,9 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE transactions SET description = ?, date_tx = ?, amount=?'
+                'UPDATE transactions SET description = ?, date_tx = ?, amount=?, payment_method_id=?, category_id=?, type_id=?, is_paid=?'
                 ' WHERE id = ?',
-                ( description, date, amount, id)
+                ( description, date, amount, payment_method_id, category_id, type_id, is_paid,  id)
             )
             db.commit()
             return redirect(url_for('transactions.index'))

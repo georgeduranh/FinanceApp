@@ -20,39 +20,74 @@
 
   <label for="category_id">Category</label>
   <select id="category_id" name="category_id" required>
-    {% block cats %} {% for category in categories %}
+    {% block default_category %} {% for category in categories %} {% if
+    category['id_categories'] == transaction['category_id'] %}
     <option value="{{category['id_categories']}}">
       {{category['category']}}
     </option>
-    {% endfor %} {%endblock%}
+    {% endif %} {% endfor %} {%endblock%} {% block cats %} {% for category in
+    categories %} {% if category['id_categories'] != transaction['category_id']
+    %}
+    <option value="{{category['id_categories']}}">
+      {{category['category']}}
+    </option>
+    {% endif %} {% endfor %} {%endblock%}
   </select>
 
   <label for="payment_method_id">Payment method</label>
   <select id="payment_method_id" name="payment_method_id" required>
-    {% block payment_methods %} {% for payment_method in payment_methods %}
+    {% block default_payment %} {% for payment_method in payment_methods %} {%
+    if payment_method['id'] == transaction['payment_method_id'] %}
     <option value="{{payment_method['id']}}">
       {{payment_method['payment_method']}}
     </option>
-    {% endfor %} {%endblock%}
+    {% endif %} {% endfor %} {%endblock%} {% block payment_methods %} {% for
+    payment_method in payment_methods %} {% if payment_method['id'] !=
+    transaction['payment_method_id'] %}
+    <option value="{{payment_method['id']}}">
+      {{payment_method['payment_method']}}
+    </option>
+    {% endif %} {% endfor %} {%endblock%}
   </select>
 
   <label for="type_id">Transaction type</label>
   <select id="type_id" name="type_id" required>
-    {% block tt %} {% for transaction_type in transaction_types %}
+    {% block default_tt %} {% for transaction_type in transaction_types %} {% if
+    transaction_type['id'] == transaction['type_id'] %}
+    <option value="{{transaction_type['id']}}">
+      {{transaction_type['transaction_type']}} {% endif %} {% endfor %}
+      {%endblock%} {% block tt %} {% for transaction_type in transaction_types%}
+      {% if transaction_type['id'] != transaction['type_id'] %}
+    </option>
+
     <option value="{{transaction_type['id']}}">
       {{transaction_type['transaction_type']}}
     </option>
-    {% endfor %} {%endblock%}
+    {% endif %} {% endfor %} {%endblock%}
   </select>
 
+  <label for="type_id">Amount</label>
   <input
     name="amount"
     id="amount"
     value="{{ transaction['amount'] }}"
     required
   />
+
+  <label for="is_paid">Is paid?</label>
+  <select id="is_paid" name="is_paid" required>
+    {% if transaction['is_paid'] == "True" %}
+    <option value="True">Si</option>
+    <option value="False">No</option>
+    {% else %}
+    <option value="False">No</option>
+    <option value="True">Si</option>
+    {% endif %}
+  </select>
+
   <input type="submit" value="Save" />
 </form>
+
 <hr />
 <form
   action="{{ url_for('transactions.delete', id=transaction['id']) }}"
