@@ -5,7 +5,7 @@ html {
   }
   
   body {
-    max-width: 960px;
+    max-width: 1200px;
     margin: 0 auto;
     background: white;
   }
@@ -95,7 +95,7 @@ html {
 
   .transactions > header > div{
     display: grid;
-    grid-template-columns: 50px repeat(1, 1fr) 150px repeat(7, 1fr);
+    grid-template-columns: 75px repeat(1, 1fr) 200px repeat(7, 1fr);
     grid-gap: 10px;
     margin: 0px;
   }

@@ -9,6 +9,7 @@ transaction_types %}
 <article class="transactions">
   <header>
     <div>
+      <p>{{ transaction_type['id'] }}</p>
       <p>{{ transaction_type['transaction_type'] }}</p>
       <form
         action="{{ url_for('transaction_types.delete', id=transaction_type['id']) }}"
