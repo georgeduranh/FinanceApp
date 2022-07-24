@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}Categories{% endblock %}</h1>
+
+{% if g.user %}
+<a class="action" href="{{ url_for('categories.create') }}">New</a>
+
+{% endif %} {% endblock %} {% block content %} {% for category in categories %}
+
+<article class="transactions">
+  <header>
+    {% if g.user['id'] == category['user_id']%}
+    <div>
+      <p>{{ category['id_categories'] }}</p>
+      <p>{{ category['category'] }}</p>
+      <form
+        action="{{ url_for('categories.delete', id=category['id_categories']) }}"
+        method="post"
+      >
+        <input
+          class="danger"
+          type="submit"
+          value="Delete"
+          onclick="return confirm('Are you sure?');"
+        />
+      </form>
+
+      <a
+        class="action"
+        href="{{ url_for('categories.update', id=category['id_categories']) }}"
+        >Edit</a
+      >
+    </div>
+    {% endif %}
+  </header>
+</article>
+{% if not loop.last %}
+<hr />
+{% endif %} {% endfor %} {% endblock %}

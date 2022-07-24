@@ -42,19 +42,25 @@ def create_app(test_config=None):
     app.register_blueprint(transactions.bp)
     app.add_url_rule('/', endpoint='index')
 
-    #Transactions view
+    #Categories view
     from . import categories
     app.register_blueprint(categories.bp)
     app.add_url_rule('/categories', endpoint='index')
 
-    #Transactions view
+    #Payment methods view
     from . import payment_methods
     app.register_blueprint(payment_methods.bp)
     app.add_url_rule('/payment_methods', endpoint='index')
 
-     #Transactions view
+     #Transactions types view
     from . import transaction_types
     app.register_blueprint(transaction_types.bp)
     app.add_url_rule('/transaction_types', endpoint='index')
+
+
+    #Budget view
+    from . import budget
+    app.register_blueprint(budget.bp)
+    app.add_url_rule('/budget', endpoint='index')
 
     return app

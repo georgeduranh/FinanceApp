@@ -68,3 +68,22 @@ CREATE TABLE users (
   last_name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE
 ) 
+
+
+CREATE TABLE buget (
+  id INTEGER  PRIMARY  KEY AUTOINCREMENT,  
+  amount_budget float  NOT NULL,
+  type_budget_id INT  NOT NULL,
+  user_id INTEGER  NOT NULL,
+  category_id INTEGER  NOT NULL,    
+  FOREIGN KEY (user_id)  REFERENCES users (id)  ON UPDATE CASCADE,  
+  FOREIGN KEY (type_budget_id) REFERENCES type_budget (id) ON UPDATE CASCADE  
+) ;
+
+CREATE TABLE type_budget (
+  id INTEGER  PRIMARY  KEY AUTOINCREMENT,  
+  type_expense TEXT  NOT NULL,
+  user_id INTEGER  NOT NULL,
+  FOREIGN KEY (buget_id)  REFERENCES buget (id)  ON UPDATE CASCADE, 
+  FOREIGN KEY (user_id)  REFERENCES users (id)  ON UPDATE CASCADE,    
+) ;
