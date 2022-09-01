@@ -45,13 +45,17 @@ def register():
                 ).fetchone()
                 
                 user = user['id']
+                amount_budget = 0.0
 
                 for category in default_categories:
                     db.execute(
-                        "INSERT INTO categories (category, user_id) VALUES (?, ?)",
-                        (category, user),
+                        "INSERT INTO categories (category, user_id, amount_budget) VALUES (?, ?, ?)",
+                        (category, user, amount_budget),
                     )
                     db.commit()
+
+
+                
 
 
             except db.IntegrityError:

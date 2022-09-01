@@ -4,6 +4,10 @@ DROP TABLE IF EXISTS transaction_types;
 DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS users;
 
+DROP TABLE IF EXISTS budget;
+DROP TABLE IF EXISTS type_budget;
+
+
 --
 -- Table structure for table categories
 --
@@ -11,6 +15,7 @@ CREATE TABLE categories (
   id_categories INTEGER  PRIMARY  KEY  AUTOINCREMENT,
   category TEXT DEFAULT NULL,
   user_id INTEGER  NOT NULL,
+  amount_budget float  NOT NULL,
   FOREIGN KEY (user_id)
   REFERENCES users (id)  
   ON UPDATE CASCADE
@@ -67,23 +72,27 @@ CREATE TABLE users (
   name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE
-) 
+) ;
 
 
-CREATE TABLE buget (
+CREATE TABLE budget (
   id INTEGER  PRIMARY  KEY AUTOINCREMENT,  
   amount_budget float  NOT NULL,
   type_budget_id INT  NOT NULL,
   user_id INTEGER  NOT NULL,
   category_id INTEGER  NOT NULL,    
   FOREIGN KEY (user_id)  REFERENCES users (id)  ON UPDATE CASCADE,  
+  FOREIGN KEY (category_id) REFERENCES categories (id_categories) ON UPDATE CASCADE,
   FOREIGN KEY (type_budget_id) REFERENCES type_budget (id) ON UPDATE CASCADE  
 ) ;
+
+
 
 CREATE TABLE type_budget (
   id INTEGER  PRIMARY  KEY AUTOINCREMENT,  
   type_expense TEXT  NOT NULL,
   user_id INTEGER  NOT NULL,
-  FOREIGN KEY (buget_id)  REFERENCES buget (id)  ON UPDATE CASCADE, 
-  FOREIGN KEY (user_id)  REFERENCES users (id)  ON UPDATE CASCADE,    
+  budget_id INTEGER  NOT NULL,
+  FOREIGN KEY (budget_id)  REFERENCES budget (id)  ON UPDATE CASCADE, 
+  FOREIGN KEY (user_id)  REFERENCES users (id)  ON UPDATE CASCADE    
 ) ;

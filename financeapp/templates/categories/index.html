@@ -12,6 +12,8 @@
     <div>
       <p>{{ category['id_categories'] }}</p>
       <p>{{ category['category'] }}</p>
+      <p>{{ category['amount_budget'] }}</p>
+
       <form
         action="{{ url_for('categories.delete', id=category['id_categories']) }}"
         method="post"

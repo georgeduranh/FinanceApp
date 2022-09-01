@@ -15,7 +15,8 @@ def index_budget():
     db = get_db()
     budget = db.execute(
         'SELECT *'
-        ' FROM budget c JOIN users u ON c.user_id = u.id where c.user_id = ?',  (g.user['id'],)
+        ' FROM budget c JOIN users u ON c.user_id = u.id'
+        ' JOIN categories cat ON cat.user_id = u.id where  c.user_id = ? ',  (g.user['id'],)
     ).fetchall()
     
     return render_template('budget/index.html', budget=budget)
@@ -25,7 +26,8 @@ def index_budget():
 @login_required
 def create():
     if request.method == 'POST':        
-        category = request.form['category']   
+        category = request.form['category'] 
+        
        
         error = None
 

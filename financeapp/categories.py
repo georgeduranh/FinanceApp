@@ -28,6 +28,7 @@ def index_cat():
 def create():
     if request.method == 'POST':        
         category = request.form['category']   
+        amount_budget = request.form['amount_budget']   
        
         error = None
 
@@ -40,8 +41,8 @@ def create():
         else:
             db = get_db()
             db.execute(
-                "INSERT INTO categories (category, user_id) VALUES (?, ?)",
-                ( category, g.user['id'],),
+                "INSERT INTO categories (category, user_id, amount_budget) VALUES (?, ?, ?)",
+                ( category, g.user['id'], amount_budget),
             )
             db.commit()
             return redirect(url_for('categories.index_cat'))
@@ -71,7 +72,9 @@ def update(id):
     error = None
 
     if request.method == 'POST':
-        category = request.form['category']      
+        category = request.form['category']   
+        amount_budget = request.form['amount_budget']   
+           
 
         if not category:
             error = 'Category is required.'
@@ -81,9 +84,9 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE categories SET category = ?'
+                'UPDATE categories SET category = ?,  amount_budget = ?'
                 ' WHERE id_categories = ?',
-                ( category, id)
+                ( category, amount_budget, id)
             )
             db.commit()
             return redirect(url_for('categories.index_cat'))

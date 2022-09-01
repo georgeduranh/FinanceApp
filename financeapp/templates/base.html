@@ -10,6 +10,7 @@
   <h1>FinanceApp</h1>
   <ul>
     <li><a href="{{ url_for('transactions.index') }}">Transactions</a></li>
+    <li><a href="{{ url_for('budget.index_budget') }}">Budget</a></li>
 
     {% if g.user %}
     <li><span>{{ g.user['username'] }}</span></li>

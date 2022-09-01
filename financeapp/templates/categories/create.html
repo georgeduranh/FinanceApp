@@ -4,6 +4,14 @@
 <form method="post">
   <label for="category">Category</label>
   <input type="category" name="category" id="category" required />
+  <label for="amount_budget">Amount budget</label>
+  <input
+    type="amount_budget"
+    name="amount_budget"
+    id="amount_budget"
+    value="{{ category['amount_budget']}}"
+    required
+  />
 
   <input type="submit" value="Save" />
 </form>
