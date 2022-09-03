@@ -1,3 +1,5 @@
+{% extends 'base.html'%} {% block header %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,11 +10,16 @@
     plot_script|indent(4)|safe }}
   </head>
   <body>
-    <h1 style="text-align: center; margin-bottom: 40px">
-      Flask + Bokeh + EasyBase.io
-    </h1>
-    <div style="display: flex; justify-content: center">
+    <article class="transactions">
+      <h1  style="text-align: center; margin-bottom: 40px">
+        Tracking
+      </h1>
+    </article>
+
+    <article class="transactions" style="display: flex; justify-content: center">
       {{ plot_div|indent(4)|safe }}
-    </div>
+    </article>
   </body>
 </html>
+
+{% endblock %}
