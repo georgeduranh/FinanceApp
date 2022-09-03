@@ -47,6 +47,7 @@ def register():
                 user = user['id']
                 amount_budget = 0.0
 
+                
                 for category in default_categories:
                     db.execute(
                         "INSERT INTO categories (category, user_id, amount_budget) VALUES (?, ?, ?)",

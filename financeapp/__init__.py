@@ -63,4 +63,9 @@ def create_app(test_config=None):
     app.register_blueprint(budget.bp)
     app.add_url_rule('/budget', endpoint='index')
 
+    #Budget view
+    from . import graph
+    app.register_blueprint(graph.bp)
+    app.add_url_rule('/graph', endpoint='index')
+
     return app
