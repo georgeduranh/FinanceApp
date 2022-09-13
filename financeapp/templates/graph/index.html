@@ -7,17 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     {{ js_resources|indent(4)|safe }} {{ css_resources|indent(4)|safe }} {{
-    plot_script|indent(4)|safe }}
+    script|indent(4)|safe }} {{script2|indent(4)|safe }}
   </head>
   <body>
     <article class="transactions">
-      <h1  style="text-align: center; margin-bottom: 40px">
-        Tracking
-      </h1>
+      <h1 style="text-align: center; margin-bottom: 40px">Tracking</h1>
     </article>
 
-    <article class="transactions" style="display: flex; justify-content: center">
-      {{ plot_div|indent(4)|safe }}
+    <article
+      class="transactions"
+      style="display: flex; justify-content: center"
+    >
+      {{ div|indent(4)|safe }}
+    </article>
+    <article class="transactions">
+      <h1 style="text-align: center; margin-bottom: 40px">Tracking</h1>
+    </article>
+
+    <article
+      class="transactions"
+      style="display: flex; justify-content: center"
+    >
+      {{ div2|indent(4)|safe }}
     </article>
   </body>
 </html>

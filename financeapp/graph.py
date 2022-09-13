@@ -1,3 +1,5 @@
+import pandas as pd 
+
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -8,45 +10,63 @@ from bokeh.resources import INLINE
 from bokeh.embed import components
 from bokeh.plotting import figure, output_file, show
 
+from financeapp.auth import login_required
+from financeapp.db import get_db
+
 
 
 bp = Blueprint('graph', __name__)
 
 
 @bp.route('/graph')
-def index():
-    
-    #https://betterprogramming.pub/deploy-interactive-real-time-data-visualizations-on-flask-with-bokeh-311239273838 
-    currMovies = [
-    {'imdbid': 'tt0099878', 'title': 'Jetsons: The Movie', 'genre': 'Animation, Comedy, Family', 'released': '07/06/1990', 'imdbrating': 5.4, 'imdbvotes': 2731, 'country': 'USA', 'numericrating': 4.3, 'usermeter': 46},
-    {'imdbid': 'tt0099892', 'title': 'Joe Versus the Volcano', 'genre': 'Comedy, Romance', 'released': '03/09/1990', 'imdbrating': 5.6, 'imdbvotes': 23680, 'country': 'USA', 'numericrating': 5.2, 'usermeter': 54},
-    {'imdbid': 'tt0099938', 'title': 'Kindergarten Cop', 'genre': 'Action, Comedy, Crime', 'released': '12/21/1990', 'imdbrating': 5.9, 'imdbvotes': 83461, 'country': 'USA', 'numericrating': 5.1, 'usermeter': 51},
-    {'imdbid': 'tt0099939', 'title': 'King of New York', 'genre': 'Crime, Thriller', 'released': '09/28/1990', 'imdbrating': 7, 'imdbvotes': 19031, 'country': 'Italy, USA, UK', 'numericrating': 6.1, 'usermeter': 79},
-    {'imdbid': 'tt0099951', 'title': 'The Krays', 'genre': 'Biography, Crime, Drama', 'released': '11/09/1990', 'imdbrating': 6.7, 'imdbvotes': 4247, 'country': 'UK', 'numericrating': 6.4, 'usermeter': 82}
-    ]
+@login_required
+def index():    
 
-    source = ColumnDataSource()
-    source.data = dict(
-        x = [d['imdbrating'] for d in currMovies],
-        y = [d['numericrating'] for d in currMovies],
-        color = ["#FF9900" for d in currMovies],
-        title = [d['title'] for d in currMovies],
-        released = [d['released'] for d in currMovies],
-        imdbvotes = [d['imdbvotes'] for d in currMovies],
-        genre = [d['genre'] for d in currMovies]
+    #Getting transaction data
+    db = get_db()
+    c = db.cursor()
+    categories = c.execute(
+        'SELECT *'
+        ' FROM transactions t JOIN users u ON t.user_id = u.id where t.user_id = ?',  (g.user['id'],)
     )
 
-    fig = figure(plot_height=600, plot_width=1000, tooltips=[("Title", "@title"), ("Released", "@released")])
-    fig.circle(x="x", y="y", source=source, size=5, color="color", line_color=None)
-    fig.xaxis.axis_label = "IMDB Rating"
-    fig.yaxis.axis_label = "Rotten Tomatoes Rating"
+    result = [dict(row) for row in categories.fetchall()]   
+        
+    # example: https://betterprogramming.pub/deploy-interactive-real-time-data-visualizations-on-flask-with-bokeh-311239273838 
 
+    #Extracting the data and grouping it 
+    df = pd.DataFrame(result)
+    df.date_tx = df.date_tx.astype(str)
+    group_result = df.groupby('date_tx')['amount'].sum()
+    print(group_result)
+    source = ColumnDataSource(pd.DataFrame(group_result))
+    date_tx = source.data['date_tx'].tolist()
+
+    #1st plot 
+    fig = figure(x_range=date_tx, height=400, tooltips=[("category_id", "@category_id")])
+    fig.vbar(x='date_tx', top='amount', source=source, width=0.9)
+    fig.xaxis.axis_label = "Date"
+    fig.yaxis.axis_label = "Amount"
+    fig.legend.location = "top_left"
     script, div = components(fig)
+
+
+    #2nd plot
+    fig1 = figure(x_range=date_tx, height=400, tooltips=[("category_id", "@category_id")])
+    fig1.vbar(x='date_tx', top='amount', source=source, width=0.9)
+    fig1.xaxis.axis_label = "Date"
+    fig1.yaxis.axis_label = "Amount"
+    fig1.legend.location = "top_left"
+    script2, div2 = components(fig)
+
+
 
     return render_template(
         'graph/index.html',
-        plot_script=script,
-        plot_div=div,
+        script = script,
+        div = div, 
+        script2 = script2, 
+        div2 = div2,
         js_resources=INLINE.render_js(),
         css_resources=INLINE.render_css(),
     ).encode(encoding='UTF-8')
