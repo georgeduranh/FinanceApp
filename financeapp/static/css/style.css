@@ -147,3 +147,8 @@ html {
     min-width: 4em;
     margin-top: 0.5em;
   }
+
+  .content > header{
+    flex-direction:column;
+    align-items: center;
+  }

@@ -9,6 +9,7 @@ from bokeh.io import curdoc
 from bokeh.resources import INLINE
 from bokeh.embed import components
 from bokeh.plotting import figure, output_file, show
+from bokeh.layouts import column
 
 from financeapp.auth import login_required
 from financeapp.db import get_db
@@ -48,7 +49,7 @@ def index():
     fig.xaxis.axis_label = "Date"
     fig.yaxis.axis_label = "Amount"
     fig.legend.location = "top_left"
-    script, div = components(fig)
+    script0, div0 = components(fig)
 
 
     #2nd plot
@@ -58,13 +59,13 @@ def index():
     fig1.yaxis.axis_label = "Amount"
     fig1.legend.location = "top_left"
     script2, div2 = components(fig)
-
+    column(fig,fig1)
 
 
     return render_template(
         'graph/index.html',
-        script = script,
-        div = div, 
+        script0 = script0,
+        div0 = div0, 
         script2 = script2, 
         div2 = div2,
         js_resources=INLINE.render_js(),
